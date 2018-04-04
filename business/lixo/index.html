@@ -1,29 +1,30 @@
-
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>Página de teste do Express.js</title>
     <script>
-    window.onload = function() {
-        var ws = new WebSocket("ws://127.0.0.1:31337");
-        
-        ws.onopen = function(event) {
-            document.getElementById("sala1").addEventListener("click", function(ev) {
-            ws.send("Sala 1");
-            }, false); 
+        window.onload = function() {
+            var ws = new WebSocket("ws://127.0.0.1:31337");
 
-            document.getElementById("sala2").addEventListener("click", function(ev) {
-            ws.send("Sala 2");
-            }, false);
-        }
+            ws.onopen = function(event) {
+                document.getElementById("sala1").addEventListener("click", function(ev) {
+                    ws.send("Sala 1");
+                }, false);
 
- 
-        ws.onmessage = function(event) {
-            document.getElementById("texto").innerHTML += (event.data + "<br>");
+                document.getElementById("sala2").addEventListener("click", function(ev) {
+                    ws.send("Sala 2");
+                }, false);
+            }
+
+
+            ws.onmessage = function(event) {
+                document.getElementById("texto").innerHTML += (event.data + "<br>");
+            }
         }
-    }
     </script>
 </head>
+
 <body>
     <br>
     <h1>Olá, eu sou o Express.js rodando em uma Raspberry!</h1>
@@ -33,4 +34,5 @@
     <br>
     <p id="texto"></p>
 </body>
+
 </html>

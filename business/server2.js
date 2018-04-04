@@ -3,49 +3,61 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: true });
+const path = require('path');
 
 var controler = require('../business/controler')
 var Control = new controler();
 
- 
-// Running Server Details.
-var server = app.listen(8082, function () {
-  var host = server.address().address
-  var port = server.address().port
-  console.log("Example app listening at %s:%s Port", host, port)
-});
- 
- 
-app.get('/', function (req, res) {
-  var html='';
-  html +="<body>";
-  html += "<form action='/thank'  method='post' name='form1'>";
-  html += "Sala:</p><input type= 'text' name='sala'>";
-  html += "Email:</p><input type='text' name='email'>";
-  html += "address:</p><input type='text' name='address'>";
-  html += "Mobile number:</p><input type='text' name='mobilno'>";
-  html += "<input type='submit' value='submit'>";
-  html += "<INPUT type='reset'  value='reset'>";
-  html += "</form>";
-  html += "</body>";
-  res.send(html);
-});
- 
-app.post('/thank', urlencodedParser, function (req, res){
-  var reply='';
-  console.log(req.body.sala)
-  /*switch(req.sala){
-    case 'sala 1':
-      Control.sala1.set(req.body.email)
-*/
-  
-  //reply += "Your name is" + req.body.name;
-  reply += "Your E-mail id is" + req.body.email; 
-  reply += "Your address is" + req.body.address;
-  reply += "Your mobile number is" + req.body.mobilno;
-  res.send(reply);
- });
+const publicDir = path.join(__dirname, '../public')
 
-app.use(function(req, res, next) {
-    res.status(404).send("Erro 404 - Página não encontrada!");
+// Running Server Details.
+var server = app.listen(8082, function() {
+    var host = server.address().address
+    var port = server.address().port
+    console.log("Example app listening at %s:%s Port", host, port)
 });
+
+app.use(bodyParser.json())
+
+app.use('/static/', express.static(publicDir))
+
+app.get('/getStatus', (req, res) => {
+    // retornar pra o jQuery ou ajax 
+    // http://rafaelcouto.com.br/atualizar-div-de-segundos-em-segundos-com-php-jquery-ajax/
+})
+
+app.post('/thank', function(req, res) {
+
+    const textoRecebido = {
+        nome: req.body.nome,
+        msg: req.body.msg
+    }
+
+    console.log(textoRecebido)
+
+    if (textoRecebido.nome == 'dayvid') {
+        res.redirect('/')
+    } else {
+        res.send(textoRecebido)
+    }
+
+    /*if (req.body.sala == 1) {
+        res.send('<h1>SALA ABERTA</h1>');
+    } else {
+        res.send('<h1>SALA FECHADA</h1>');
+    }*/
+
+});
+
+app.get('/getCaba', (req, res) => {
+    res.send('CABA CABA CABABA')
+})
+
+app.use('/', (req, res) => {
+    res.sendFile(publicDir + '/index.html')
+})
+
+/*
+app.use(function(req, res) {
+    res.send('Erro 404 - Página não encontrada!');
+});*/
