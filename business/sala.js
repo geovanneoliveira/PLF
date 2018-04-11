@@ -18,22 +18,30 @@ class sala{
     run(){
 
         if (this.porta === true) {
-            //liga
+            //feixa
         }else{
-            //desliga
+            //abre
         }
         if (this.ar === true) {
-            //liga
-        }else{
             //desliga
+        }else{
+            //liga
         }
         if (this.datashow === true) {
-            //liga
-        }else{
             //desliga
+        }else{
+            //liga
         }
 
     }
+
+
+
+
+
+
+
+    
     /* abrirSala(){
         this.porta = true
         this.ligarAr()

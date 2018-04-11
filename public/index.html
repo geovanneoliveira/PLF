@@ -4,24 +4,42 @@
 <head>
     <title>TESTE</title>
 </head>
+<script type="text/javascript">
+
+    var led1 = 0;
+    function onClickHandler(){
+       
+      //pegar os dados da rota getStatus e atulizar usando o exemplo :
+      // https://startingelectronics.org/tutorials/arduino/ethernet-shield-web-server-tutorial/web-server-read-switch-using-AJAX/
+      //para mudar a info da LABEL 
+
+      //https://stackoverflow.com/questions/6418220/javascript-send-json-object-with-ajax
+</script>
 
 <body>
     <H1>HOME PAGE ALOU ALOU</H1>
 
     <form action="/thank" method="post">
-        <div>
-            <label for="nome">Nome:</label><br>
-            <input type="text" id="nome" name="nome" />
-        </div><br>
-        <div>
-            <label for="msg">Mensagem:</label>
-            <br><textarea id="msg" name="msg"></textarea>
-        </div>
-        <br>
-        <div class="button">
-            <button type="submit">Enviar sua mensagem</button>
+        <div><br>
+            <label for="nome">led1:</label><br>
+             <input type="submit" name="led" onclick="onClickHandler" value="led1"> Led1 desligado <br>
         </div>
     </form>
+    
+
+    <form action="/thank" method="post">
+     <div><br>
+            <label for="nome">led2:</label><br>
+            <input type="submit" name="led" onclick="onClickHandler" value="led2"> Led2 desligado <br>
+    </div>
+    
+
+    </form>
+   <form action="/thank" method="post">
+     <div><br>
+            <label for="nome">led3:</label><br>
+            <input type="submit" name="led" onclick="onClickHandler" value="led3"> Led3 desligado <br>
+    </div>
 
 </body>
 

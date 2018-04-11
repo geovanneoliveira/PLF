@@ -1,4 +1,3 @@
-var http = require("http");
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -10,54 +9,83 @@ var Control = new controler();
 
 const publicDir = path.join(__dirname, '../public')
 
-// Running Server Details.
+
 var server = app.listen(8082, function() {
     var host = server.address().address
     var port = server.address().port
     console.log("Example app listening at %s:%s Port", host, port)
 });
 
-app.use(bodyParser.json())
 
-app.use('/static/', express.static(publicDir))
 
-app.get('/getStatus', (req, res) => {
-    // retornar pra o jQuery ou ajax 
-    // http://rafaelcouto.com.br/atualizar-div-de-segundos-em-segundos-com-php-jquery-ajax/
+
+//app.use(bodyParser.json())
+//funcao usada para teste
+//acesar http://localhost:8082/getStatus
+function mudar(led_){
+	if(led_ == 'led1'){
+		if(Control.led1 == false){
+			Control.led1 = true
+		}
+		else{
+			Control.led1 = false
+		}
+	}
+
+	if(led_ == 'led2'){
+		if(Control.led2 == false){
+			Control.led2 = true
+		}
+		else{
+			Control.led2 = false
+		}
+	}
+
+	if(led_ == 'led3'){
+		if(Control.led3 == false){
+			Control.led3 = true
+		}
+		else{
+			Control.led3 = false
+		}
+	}
+
+
+}
+
+app.use('/static/', express.static(publicDir)) //????
+
+app.get('/getStatus', urlencodedParser, (req, res) => {
+
+	var retorno = {
+		led1: Control.led1,
+		led2: Control.led2,
+		led3: Control.led3
+	}
+    res.send(retorno)
 })
 
-app.post('/thank', function(req, res) {
-
+app.post('/thank', urlencodedParser, function(req, res) {
+	console.log('ROLA')
     const textoRecebido = {
-        nome: req.body.nome,
-        msg: req.body.msg
+        led: req.body.led
     }
+    mudar(req.body.led)
 
     console.log(textoRecebido)
-
-    if (textoRecebido.nome == 'dayvid') {
-        res.redirect('/')
-    } else {
-        res.send(textoRecebido)
-    }
-
-    /*if (req.body.sala == 1) {
-        res.send('<h1>SALA ABERTA</h1>');
-    } else {
-        res.send('<h1>SALA FECHADA</h1>');
-    }*/
-
+    res.redirect('/')
 });
 
-app.get('/getCaba', (req, res) => {
-    res.send('CABA CABA CABABA')
-})
 
-app.use('/', (req, res) => {
+
+
+app.get('/', (req, res) => {
     res.sendFile(publicDir + '/index.html')
 })
 
-/*
+
+
+
 app.use(function(req, res) {
     res.send('Erro 404 - Página não encontrada!');
-});*/
+});
